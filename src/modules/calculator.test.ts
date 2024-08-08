@@ -1,14 +1,5 @@
 import calculator from './calculator';
 
-// interface NumberTestCase {
-//   description: string;
-//   inputs: {
-//     a: number;
-//     b: number;
-//   };
-//   expectedOutput: number;
-// }
-
 describe('a basic calculator that performs +, -, *, and /', () => {
   describe('addition', () => {
     test('add two positive numbers', () => {
