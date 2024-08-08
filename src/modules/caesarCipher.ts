@@ -2,34 +2,23 @@ function isLetter(char: string): boolean {
   return /^[a-zA-Z]$/.test(char);
 }
 
-function findNewCharacter(
-  oldChar: string,
-  alphabet: string[],
-  shiftFactor: number,
-): string {
-  const isUpperCase = oldChar === oldChar.toUpperCase();
-  const lowerChar = oldChar.toLowerCase();
-  const oldIndex = alphabet.findIndex((char) => char === lowerChar);
-  if (oldIndex === -1) {
-    return oldChar;
+function shiftCharacter(char: string, shiftFactor: number): string {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const isUpperCase = char === char.toUpperCase();
+  const lowerChar = char.toLowerCase();
+  const oldIndex = alphabet.indexOf(lowerChar);
+
+  let newIndex = (oldIndex + shiftFactor) % alphabet.length;
+  if (newIndex < 0) {
+    newIndex += alphabet.length;
   }
-  const newIndex = (oldIndex + shiftFactor) % alphabet.length;
   const newChar = alphabet[newIndex];
+
   return isUpperCase ? newChar.toUpperCase() : newChar;
 }
 
 export default function caesarCipher(str: string, shiftFactor: number): string {
-  const alphabet: string[] = Array.from('abcdefghijklmnopqrstuvwxyz');
-  const stringArray: string[] = Array.from(str);
-  let shiftedStringArray: string[] = [];
-
-  stringArray.forEach((char) => {
-    if (isLetter(char)) {
-      const newCharacter = findNewCharacter(char, alphabet, shiftFactor);
-      shiftedStringArray.push(newCharacter);
-    } else {
-      shiftedStringArray.push(char);
-    }
-  });
-  return shiftedStringArray.join('');
+  return Array.from(str)
+    .map((char) => (isLetter(char) ? shiftCharacter(char, shiftFactor) : char))
+    .join('');
 }
