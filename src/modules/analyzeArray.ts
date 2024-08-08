@@ -6,33 +6,28 @@ export interface NumberArrayFacts {
 }
 
 export default function analyzeArray(numbers: number[]): NumberArrayFacts {
-  const total = numbers.reduce((sum, currentValue) => {
-    return sum + currentValue;
-  }, 0);
-
   const length = numbers.length;
 
+  if (length === 0) {
+    return {
+      average: NaN,
+      min: NaN,
+      max: NaN,
+      length: 0,
+    };
+  }
+
+  const total = numbers.reduce((sum, currentValue) => sum + currentValue, 0);
   const average = total / length;
 
-  const min =
-    numbers.length === 0
-      ? NaN
-      : numbers.reduce((minimum, currentValue) => {
-          if (currentValue < minimum) {
-            minimum = currentValue;
-          }
-          return minimum;
-        }, numbers[0]);
+  const min = numbers.reduce(
+    (minimum, currentValue) => Math.min(minimum, currentValue),
+    numbers[0],
+  );
+  const max = numbers.reduce(
+    (maximum, currentValue) => Math.max(maximum, currentValue),
+    numbers[0],
+  );
 
-  const max =
-    length === 0
-      ? NaN
-      : numbers.reduce((maximum, currentValue) => {
-          if (currentValue > maximum) {
-            maximum = currentValue;
-          }
-          return maximum;
-        });
-
-  return { average, length, max, min };
+  return { average, min, max, length };
 }
