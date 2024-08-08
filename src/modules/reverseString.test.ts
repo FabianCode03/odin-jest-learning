@@ -1,10 +1,5 @@
 import reverseString from './reverseString';
-
-interface TestCase {
-  description: string;
-  input: string;
-  expectedOutput: string;
-}
+import TestCase from './TestCase_interface';
 
 const testCases: TestCase[] = [
   {
